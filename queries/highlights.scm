@@ -7,8 +7,7 @@
   "%}"
   "{%-"
   "-%}"
-  ] @tag.delimiter
- (#set! priority 101))
+  ] @tag.delimiter)
 
 
 ([
@@ -16,14 +15,12 @@
   "["
   ")"
   "("
-  ] @punctuation.bracket
- (#set! priority 101))
+  ] @punctuation.bracket)
 
 ([
   ","
   "."
-  ] @punctuation.delimiter
- (#set! priority 101))
+  ] @punctuation.delimiter)
 
 
 ([
@@ -76,44 +73,41 @@
   "unless"
   "when"
   "with"
-  ] @keyword
- (#set! priority 101))
+  ] @keyword)
 
 ([
   "and"
   "contains"
   "in"
   "or"
-  ] @keyword.operator
- (#set! priority 101))
+  ] @keyword.operator)
 
 ([
   "|"
   ":"
   "="
   (predicate)
-  ] @operator
- (#set! priority 101))
+  ] @operator)
 
-((identifier) @variable (#set! priority 101))
-((string) @string (#set! priority 101))
-((boolean) @boolean (#set! priority 101))
-((number) @number (#set! priority 101))
+((identifier) @variable)
+((string) @string)
+((boolean) @boolean)
+((number) @number)
 
 (filter
-  name: (identifier) @function.call (#set! priority 101))
+  name: (identifier) @function.call)
 
 (raw_statement
-  (raw_content) @text.reference (#set! priority 102))
+  (raw_content) @text.reference)
 
-((comment) @comment (#set! priority 102))
+((comment) @comment)
 
-((doc) @comment.documentation (#set! priority 102))
-((doc_content) @comment.documentation (#set! priority 102))
-((doc_description_annotation) @keyword (#set! priority 103))
-((doc_example_annotation) @comment.documentation (#set! priority 102))
-((doc_example_content) @none (#set! priority 103))
-((doc_param_name) @variable (#set! priority 103))
-((doc_type) @type (#set! priority 103))
-("@param" @keyword (#set! priority 103))
-("@example" @keyword (#set! priority 103))
+((doc) @comment.documentation)
+((doc_content) @comment.documentation)
+((doc_description_annotation) @keyword)
+((doc_example_annotation) @comment.documentation)
+((doc_example_content) @none)
+((doc_param_name) @variable)
+((doc_type) @type)
+("@param" @keyword)
+("@example" @keyword)
