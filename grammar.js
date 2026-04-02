@@ -20,6 +20,9 @@ module.exports = grammar({
     $._paired_comment_content_liq,
     $.raw_content,
     $.front_matter,
+    $.doc_content,
+    $.doc_param_name,
+    $.doc_example_content,
 
     // check if scanner is in error recovery mode
     $.error_sentinel,
@@ -42,7 +45,7 @@ module.exports = grammar({
   rules: {
     program: ($) => seq(optional($.front_matter), repeat($._node)),
 
-    _node: ($) => choice($._statement, $.template_content, $.comment),
+    _node: ($) => choice($._statement, $.template_content, $.comment, $.doc),
 
     template_content: (_) => repeat1(choice(/[^{]+|\{[^{%]/, '{%%', '{{{')),
 
@@ -431,6 +434,34 @@ module.exports = grammar({
 
     comment_liq: ($) =>
       choice($._inline_comment_content, $._paired_comment_liq),
+
+    doc: ($) =>
+      seq(
+        tag('doc'),
+        repeat(choice(
+          $.doc_content,
+          $.doc_param_annotation,
+          $.doc_description_annotation,
+          $.doc_example_annotation,
+          $.doc_type,
+        )),
+        tag('enddoc'),
+      ),
+
+    doc_param_annotation: ($) => prec.right(seq(
+      '@param',
+      optional($.doc_type),
+      optional($.doc_param_name),
+    )),
+
+    doc_description_annotation: (_) => '@description',
+
+    doc_example_annotation: ($) => prec.right(seq(
+      '@example',
+      optional($.doc_example_content),
+    )),
+
+    doc_type: (_) => seq('{', /[^}]+/, '}'),
 
     _inline_comment: ($) => tag(repeat1($._inline_comment_content)),
 
